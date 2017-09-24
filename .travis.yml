@@ -15,7 +15,7 @@ env:
 script:
 #travis_wait 360 mvn clean test -U
 - gpg --import .travis.key.gpg
-- mvn versions:set -DnewVersion=${TRAVIS_TAG}
+#- mvn versions:set -DnewVersion=${TRAVIS_TAG}
 - mvn clean deploy -P release --settings .travis.settings.xml
 #deploy:
 #  provider: script
