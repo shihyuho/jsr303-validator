@@ -1,3 +1,4 @@
+sudo: false
 language: java
 jdk:
 - oraclejdk8
@@ -11,10 +12,13 @@ env:
   - secure: 3UiNvc9fWPaH1j3V7fOqvR6PAH/IvELWb078pvfOTn0PWkeyUuqJktSsKVC2Z7ilzB29mwI5cWK6+6d9VOt4Fo1bXudUbDOrKlI4w/RBwjC/uiOAcYUph7/TqekL1ircw4U1seYjb/8Sbe1Kc5PSt4kjJiaxQKJ59Dg1C7N8NnGOryln2HsBiGZRW7Fg4nyqlNVUDcbji1qtW2DCJ/wi/i3v4Mf2x0OQdbfWmRmPHGrW4hNQg3RjhBVMvH9EsfOdIehfRujxELti4vIyW0gLmr80OPLJ5zxMsf2TxY1gSOBXh4b4983ledz2GPrbnA16VzjTOL/bymWwI26AcDBgNzKuQu1tHG09Wz8c9dHTfCbRB+tu83P9y+gffPqTU/WfiPqTRnErjgWEI7wE29OJxfvueiJ45eFWs4CSEIHUun66xzc76BomNdLaPGY8Rumr3IWTauVNwWRc2W4aBitTXhtjdKPzgz1i0aYKMDEMN9TzGa+n/Bn6vLsKRWpreEOlrvg76F7NANweytyebnpz4icu1UDtSQ9ST0vskZdUJag585N6V2CWgfId6cOaVbAlTxK+VVcebejrY9dXhDJqCUzZ69TLBx7ZN0Aur1sipFL3JS+kjn982BCTVpVydc/06s8fWYNDO9o/hm2iZtOu/1PfWop3TEM862H1Sa9LXk8=
   - secure: mtBNw39az1A2F40l80AA8Cw6IlMN8I+xGgBGfX7ohF0bKpPqJ50b6z5uXbLYWgFgpeXZxt0/CrWnbjfwYwnJAV71oOoN+kMHCYHpMHf0zLaFtuqbXJBhDmGVvTc+kPohexwan1j+GBYhuF92O6qWgvhnZ80+CZjCl8WhvhdT0FIAX7FWszaXO23bF1bDaL77tEvJ1A58wrW6LMCx8x0B8eT1KWRRZc+L3gYw/Q2+1JdIgtQATtQA+0FAgzCkMTqyRQRUD64w/FxvlYB2yXloGmwg7xK8cFZgyxskeWdTIdWUs6/2KZZkjB0SudTRbMjJpQWkQfWv6Wb5K8U8PjLfKevH/9XZL+Mv5SwmZtUIuNVe7bhVgugC445cPAVA3qXvcsfZxTMA9PLZlQIB6QnDeRqy9b9jxqeULuFCE2/EJJdjpf2/XHSVPi0/izTVnQqYiVr3zl47N/AMSFfxTxQ8UeMauGx7mTGumqqfZ0eEkjx4LITIB494lBvpVouDYlDI4GFvC6h+ZtZlSXNR1fijEY2gX+Lj18h7Smr/F64EtOEDnP2AZ5Tfo/PAPkgohuFY4eJ+GdU8+huILphmrV1Y0OZp8wkQsAVPRoNv+1+e0Xi5AOgYd3bR/wuWAv5K8NsqAyHfdHHJZjaVyvDmU8Fq+Hq/pOdhkwQG3jFS4YksW40=
 script: travis_wait 360 mvn clean test -U
+
+before_deploy:
+  - gpg --import .travis.key.gpg
+  - mvn versions:set -DnewVersion=${TRAVIS_TAG}
 deploy:
   provider: script
-  script: gpg --import .travis.key.gpg && \
-          mvn versions:set -DnewVersion=${TRAVIS_TAG} && \
-          mvn clean deploy -P release --settings .travis.settings.xml
+  skip_cleanup: true
+  script: mvn clean deploy -P release --settings .travis.settings.xml
   on:
     tags: true
