@@ -2,6 +2,8 @@
 
 A collection of jsr-303 validators I used
 
+[![Build Status](https://travis-ci.org/shihyuho/jsr303-validator.svg?branch=master)](https://travis-ci.org/shihyuho/jsr303-validator)
+
 ## AssertThat
 
 Integration with [Apache commons JEXL](http://commons.apache.org/proper/commons-jexl/)
