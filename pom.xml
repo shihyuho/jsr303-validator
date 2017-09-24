@@ -109,10 +109,10 @@
         <profile>
             <id>release</id>
             <distributionManagement>
-                  <snapshotRepository>
-                           <id>ossrh</id>
-                           <url>https://oss.sonatype.org/content/repositories/releases/</url>
-                  </snapshotRepository>
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/content/repositories/releases/</url>
+                </snapshotRepository>
             </distributionManagement>
             <build>
                 <plugins>
